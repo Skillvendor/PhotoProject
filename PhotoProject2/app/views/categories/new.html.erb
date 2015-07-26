@@ -1,0 +1,10 @@
+<% provide(:title, 'New Category') %>
+
+<%= form_for(@category) do |f| %>
+
+    <%= f.label :name %><br>
+    <%= f.text_area :name %>
+
+    <%= f.submit %>
+  
+<% end %>

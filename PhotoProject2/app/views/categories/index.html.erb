@@ -1,0 +1,11 @@
+<% provide(:title, 'All Categories') %>
+
+<% @categories.each do |category| %>
+		
+	<p> <%= category.name %> </p>
+	<p> <%= category.id %> </p>
+
+<% end %>
+
+<%= link_to "New", new_category_path %>
+<%= link_to "JSON of this page", current_url(:format=>:json) %>

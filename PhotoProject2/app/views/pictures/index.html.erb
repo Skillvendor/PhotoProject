@@ -1,0 +1,12 @@
+<% provide(:title, 'All Pictures') %>
+
+<% @pictures.each do |pic| %>
+		
+	<%= image_tag pic.photo.url %> 
+	<p> <%= pic.id %> </p>
+	<p> <%= pic.description %> </p>
+	<p> <%= pic.category_id %> </p>
+
+<% end %>
+
+<%= link_to "New", new_picture_path %>

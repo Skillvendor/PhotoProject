@@ -1,0 +1,14 @@
+<%= form_for(@pic, url: pictures_path, method: "post", :html => { :multipart => true }) do |f| %>
+
+  <%= f.label :description, "Descriere" %>
+  <%= f.text_field :description, :required => false %><br>
+
+  <%= f.label :photo, "Fotografie" %>
+  <%= f.file_field :photo, :required => true %><br>
+
+  <%= collection_select(nil, :category_id, @categories,
+                  :id, :name,
+                 {:prompt => 'Alege o categorie'}) %> <br>
+
+  <%= f.submit "Adauga fotografie" %>
+<% end %>
