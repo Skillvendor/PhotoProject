@@ -1,0 +1,8 @@
+<% provide(:title, 'Single Pic') %>
+
+	<%= image_tag @pic.photo.url %> 
+	<p> <%= @pic.id %> </p>
+	<p> <%= @pic.description %> </p>
+	<p> <%= @pic.category_id %> </p>
+
+	<%= link_to "JSON of this page", current_url(:format=>:json) %>

@@ -17,6 +17,9 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'kaminari'
 #pry is good at debugging
 gem 'pry'
+#json standard serializer
+gem 'jsonapi-serializers'
+gem 'active_model_serializers'
 #pg is used for a postgress database
 gem 'pg',             '0.17.1'
 #use carrierwave to store images

@@ -6,7 +6,8 @@
 	<p> <%= pic.id %> </p>
 	<p> <%= pic.description %> </p>
 	<p> <%= pic.category_id %> </p>
+	<%= link_to "Show", picture_path(pic) %> 
 
 <% end %>
-
+<%= link_to "JSON of this page", current_url(:format=>:json) %>
 <%= link_to "New", new_picture_path %>
