@@ -21,13 +21,9 @@ ActiveRecord::Schema.define(version: 20150726082212) do
   end
 
   create_table "pictures", force: :cascade do |t|
-    t.string   "description"
-    t.integer  "category_id"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.string   "photo"
+    t.string  "description"
+    t.integer "category_id"
+    t.string  "photo"
   end
 
   add_index "pictures", ["category_id"], name: "index_pictures_on_category_id", using: :btree
