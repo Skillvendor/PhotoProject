@@ -32,13 +32,9 @@ ActiveRecord::Schema.define(version: 20150727125108) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "pictures", force: :cascade do |t|
-    t.string   "description"
-    t.integer  "category_id"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.string   "photo"
+    t.string  "description"
+    t.integer "category_id"
+    t.string  "photo"
   end
 
   add_index "pictures", ["category_id"], name: "index_pictures_on_category_id", using: :btree

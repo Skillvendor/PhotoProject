@@ -35,13 +35,13 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+# contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo
 gem 'tzinfo-data'
-
+# Rails integration for bower
 gem 'bower-rails'
-#for angular
+# use angular templates with rails' asset pipeline
 gem 'angular-rails-templates'
-#for user management
+# user management
 gem 'devise'
 
 # Use ActiveModel has_secure_password

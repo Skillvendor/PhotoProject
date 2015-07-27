@@ -1,11 +1,11 @@
-app = angular.module('App', ['ngRoute', 'templates'])
+app = angular.module('App', ['ngRoute', 'ngResource', 'templates'])
 
 app.config(['$routeProvider', ($routeProvider)->
 
     $routeProvider
       .when('/',
-        templateUrl: "photoTemplate.html"
-        controller: 'PhotoController'
+        templateUrl: "main.html"
+        controller: 'MainController'
       )
 
 ])
