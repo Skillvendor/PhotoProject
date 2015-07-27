@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726082212) do
+ActiveRecord::Schema.define(version: 20150727125108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,13 +20,40 @@ ActiveRecord::Schema.define(version: 20150726082212) do
     t.string "name"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string   "text"
+    t.integer  "user_id"
+    t.integer  "picture_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["picture_id"], name: "index_comments_on_picture_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
   create_table "pictures", force: :cascade do |t|
-    t.string  "description"
-    t.integer "category_id"
-    t.string  "photo"
+    t.string   "description"
+    t.integer  "category_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string   "photo"
   end
 
   add_index "pictures", ["category_id"], name: "index_pictures_on_category_id", using: :btree
 
+  create_table "users", force: :cascade do |t|
+    t.string   "email",               default: "", null: false
+    t.string   "encrypted_password",  default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+
+  add_foreign_key "comments", "pictures"
+  add_foreign_key "comments", "users"
   add_foreign_key "pictures", "categories"
 end

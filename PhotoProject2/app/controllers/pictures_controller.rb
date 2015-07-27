@@ -3,6 +3,7 @@ class PicturesController < ApplicationController
 
 	before_action :set_category, only: [:create]
 	before_action :set_pic, only: [:show, :destroy]
+	before_action :get_comments, only: [:show]
 
 	def index
 		@pictures = Picture.all
@@ -35,7 +36,7 @@ class PicturesController < ApplicationController
   def show
   	respond_to do |format|
       format.html { }
-      format.json { render json: serialize_model(@pic)}
+      format.json { render json: serialize_model(@pic, include: ['comments'])}
     end
   end
 
@@ -63,6 +64,10 @@ private
 
 	def picture_params
 		params.require(:picture).permit(:photo, :description, :category_id)
+	end
+
+	def get_comments
+		@comments = @pic.comments
 	end
 
 end

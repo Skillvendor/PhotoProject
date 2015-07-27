@@ -1,5 +1,13 @@
 <% provide(:title, 'All Pictures') %>
 
+<% if user_signed_in? %>
+<h1> my name is <%= current_user.email %> </h1>
+<%= link_to "Sign Out", destroy_user_session_path, :method => :delete %> 
+<% else %>
+<h1> not signed it </h1>
+<%= link_to "Sign In", new_user_session_path %>
+<% end %>
+
 <% @pictures.each do |pic| %>
 		
 	<%= image_tag pic.photo.url %> 

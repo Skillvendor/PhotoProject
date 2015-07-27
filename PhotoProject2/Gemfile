@@ -19,6 +19,7 @@ gem 'kaminari'
 gem 'pry'
 #json standard serializer
 gem 'jsonapi-serializers'
+#active_model_serializers will be deleted !
 gem 'active_model_serializers'
 #pg is used for a postgress database
 gem 'pg',             '0.17.1'
@@ -38,8 +39,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'tzinfo-data'
 
 gem 'bower-rails'
-
+#for angular
 gem 'angular-rails-templates'
+#for user management
+gem 'devise'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

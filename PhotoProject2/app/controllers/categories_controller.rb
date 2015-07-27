@@ -1,5 +1,4 @@
 class CategoriesController < ApplicationController
-
 	include SerializerModule
 
 	before_action :set_category, only: [:destroy]
@@ -33,7 +32,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @product.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to categories_path, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }

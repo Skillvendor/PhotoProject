@@ -5,4 +5,25 @@
 	<p> <%= @pic.description %> </p>
 	<p> <%= @pic.category_id %> </p>
 
+<% @comments.each do |comment| %>
+		
+	<p> <%= comment.id %> </p>
+	<p> <%= comment.text %> </p>
+	<p> <%= comment.picture_id %> </p>
+	<p> <%= comment.user_id %> </p>
+
+	<%= link_to "Deleteaza comentariul", comment_path(comment), method: "delete" %>
+
+<% end %>
+
+	<%= form_for(@pic.comments.build, url: comments_path, method: "post" ) do |f| %>
+
+  <%= f.label :text, "Text" %>
+  <%= f.text_field :text, :required => true %><br>
+
+  <%= f.hidden_field :picture_id, value: @pic.id %>
+
+  <%= f.submit "Adauga comment" %>
+<% end %>
+
 	<%= link_to "JSON of this page", current_url(:format=>:json) %>
