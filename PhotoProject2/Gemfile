@@ -40,8 +40,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'tzinfo-data'
 # Rails integration for bower
 gem 'bower-rails'
-# use angular templates with rails' asset pipeline
+# use angular templates with asset pipeline
 gem 'angular-rails-templates'
+# injects MaterialDesign into  asset pipeline
+gem 'bootstrap-material-design'
+
 # user management
 gem 'devise'
 

@@ -4,7 +4,7 @@
 Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2 )
 Rails.application.config.assets.precompile += %w( bootstrap/glyphicons-halflings-regular.woff2 )
-
+# 
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 

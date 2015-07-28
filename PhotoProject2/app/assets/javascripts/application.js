@@ -4,7 +4,7 @@
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
 //= require angular-rails-templates
-//= require angular-material
+//= require bootstrap-material-design
 //= require_tree .
 
 //app related stuff
@@ -12,5 +12,6 @@
 //= require controllers/main_controller
 //= require services/categories_service
 //= require services/photo_service
+
 
 

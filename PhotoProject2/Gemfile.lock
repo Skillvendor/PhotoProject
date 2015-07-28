@@ -43,10 +43,18 @@ GEM
       sprockets (~> 2)
       tilt
     arel (6.0.2)
+    autoprefixer-rails (5.2.1.1)
+      execjs
+      json
     bcrypt (3.1.9)
     bcrypt (3.1.9-x86-mingw32)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-material-design (0.2.1)
+      bootstrap-sass (~> 3.0)
+    bootstrap-sass (3.3.5.1)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.3.0)
     bower-rails (0.10.0)
     builder (3.2.2)
     carrierwave (0.10.0)
@@ -232,6 +240,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   angular-rails-templates
+  bootstrap-material-design
   bower-rails
   carrierwave (= 0.10.0)
   coffee-rails (~> 4.1.0)
