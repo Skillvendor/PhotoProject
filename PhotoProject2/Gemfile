@@ -26,6 +26,7 @@ gem 'pg',             '0.17.1'
 #use carrierwave to store images
 gem 'carrierwave',             '0.10.0'
 gem 'mini_magick',             '3.8.0'
+gem 'rails-angular-material'
 gem 'fog',                     '1.23.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
