@@ -9,4 +9,9 @@ module SerializerModule
     options[:is_collection] = true
     JSONAPI::Serializer.serialize(models, options)
   end
+
+  def serialize_errors(models, options = {})
+    options[:is_collection] = true
+    JSONAPI::Serializer.serialize(models, options)
+  end
 end

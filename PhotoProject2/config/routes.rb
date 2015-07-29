@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
   devise_for :users
+
   root to: 'pictures#index'
 
-  resources :categories , only: [:index, :new, :create, :destroy]
+  resources :categories
   resources :pictures
   resources :comments, only: [:create, :destroy]
   # Example of regular route:

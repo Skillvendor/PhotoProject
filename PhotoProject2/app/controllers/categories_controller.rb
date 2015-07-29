@@ -1,41 +1,40 @@
 class CategoriesController < ApplicationController
 	include SerializerModule
 
-	before_action :set_category, only: [:destroy]
+	before_action :set_category, only: [:destroy, :update]
+
+  respond_to :json
 
 	def index
 		@categories = Category.all
-
-		respond_to do |format|
-      format.html { }
-      format.json { render json: serialize_models(@categories)}
-    end
+    render json: serialize_models(@categories)
 	end
 
   def new
-  	@category = Category.new
   end
 
 	def create 
 		@category = Category.new(category_params)
-
-		respond_to do |format|
-      if @category.save
-        format.html { redirect_to categories_path, notice: 'Categoria a fost creata' }
-        format.json { render json: serialize_model(@category, is_collection: false)}
-      else
-        format.html { render :new, notice: 'Categoria nu a putut sa fie salvata' }
-        format.json { render json: serialize_model(@category.errors) }
-      end
+    if @category.save
+      render json: serialize_model(@category, is_collection: false)
+    else
+      render json: @category.errors
     end
   end
 
   def destroy
-    @product.destroy
+    if @category.destroy
+      head :no_content 
+    else
+      render json: serialize_model(@category.errors)
+    end
+  end
 
-    respond_to do |format|
-      format.html { redirect_to categories_path, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+  def update
+    if @category.update_attributes(category_params)
+      render json: serialize_model(@category)
+    else
+      render json: @category.errors
     end
   end
 
@@ -46,6 +45,6 @@ private
 	end
 
 	def set_category
-		@category = Category.find(params[:id])
+		@category = Category.where(params[:id]).first
 	end
 end

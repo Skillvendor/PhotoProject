@@ -1,65 +1,52 @@
 class PicturesController < ApplicationController
 	include SerializerModule
 
-	before_action :set_category, only: [:create]
-	before_action :set_pic, only: [:show, :destroy]
+	before_action :set_pic, only: [:show, :destroy, :update]
 	before_action :get_comments, only: [:show]
+
+  respond_to :json
 
 	def index
 		@pictures = Picture.all
-
-		respond_to do |format|
-      format.html { }
-      format.json { render json: serialize_models(@pictures)}
-    end
+    render json: serialize_models(@pictures)
 	end
 
 	def new
-		@pic = Picture.new
-		@categories = Category.all
 	end
 
 	def create
-		@pic = @category.pictures.create(picture_params)
-
-		respond_to do |format|
-      if @category.save
-        format.html { redirect_to pictures_path, notice: 'Poza a fost adaugata' }
-        format.json { render json: serialize_model(@pic) }
-      else
-        format.html { render :new }
-        format.json { render json: @pic.errors, status: :unprocessable_entity }
-      end
+		@pic = Picture.new(picture_params)
+    if @pic.save
+      render json: serialize_model(@pic)
+    else
+      render json: @pic.errors
     end
   end
 
   def show
-  	respond_to do |format|
-      format.html { }
-      format.json { render json: serialize_model(@pic, include: ['comments'])}
+    render json: serialize_model(@pic, include: ['comments'])
+  end
+
+  def update
+    if @pic.update_attributes(picture_params)
+      render json: serialize_model(@pic)
+    else
+      render json: @pic.errors
     end
   end
 
   def destroy
-  	respond_to do |format|
-  		if @pic.destroy
-        format.html { redirect_to pictures_path, notice: 'Poza a fost stearsa' }
-        format.json { head :no_content}
-      else
-        format.html { render :index }
-        format.json { render json: serialize_model(@pic.errors) }
-      end
+  	if @pic.destroy
+      head :no_content
+    else
+      render json: @pic.errors
     end
   end
 
 private
 
-	def set_category
-		@category = Category.find(params[:category_id])
-	end
-
 	def set_pic
-		@pic = Picture.find(params[:id])
+		@pic = Picture.where(id: params[:id]).first
 	end
 
 	def picture_params
@@ -69,5 +56,4 @@ private
 	def get_comments
 		@comments = @pic.comments
 	end
-
 end
