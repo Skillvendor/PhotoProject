@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 
   root to: 'pictures#index'
 
-  resources :categories
-  resources :pictures
-  resources :comments, only: [:create, :destroy]
+  scope '/api' do
+    resources :categories
+    resources :pictures
+    resources :comments, only: [:create, :destroy]
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
