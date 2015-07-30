@@ -3,6 +3,12 @@ class CategoriesController < ApplicationController
 
 	before_action :set_category, only: [:destroy, :update]
 
+  before_filter only: [:create, :update] do
+    unless params.has_key?('category')
+      render nothing: true, status: :bad_request
+    end
+  end
+
   respond_to :json
 
 	def index

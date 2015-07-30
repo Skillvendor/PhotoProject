@@ -1,7 +1,14 @@
 class CommentsController < ApplicationController
   include SerializerModule
 
+  before_action :check_login
   before_action :get_comment, only: [:destroy, :update] 
+
+  before_filter only: [:create] do
+    unless params.has_key?('comment') 
+      render nothing: true, status: :bad_request
+    end
+  end
 
   respond_to :json
 
@@ -38,5 +45,11 @@ private
 
   def get_comment
     @comment = Comment.where(id: params[:id]).first
+  end
+
+  def check_login
+    unless current_user
+      render nothing: true, status: :unauthorized
+    end
   end
 end

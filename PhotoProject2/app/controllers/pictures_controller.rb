@@ -4,6 +4,14 @@ class PicturesController < ApplicationController
 	before_action :set_pic, only: [:show, :destroy, :update]
 	before_action :get_comments, only: [:show]
 
+  before_filter only: [:create] do
+    unless params.has_key?('picture')
+      render nothing: true, status: :bad_request
+    end
+  end
+
+  respond_to :json
+
 	def index
 		@pictures = Picture.all
     render json: serialize_models(@pictures)
