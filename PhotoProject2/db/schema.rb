@@ -17,24 +17,28 @@ ActiveRecord::Schema.define(version: 20150727125108) do
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", force: :cascade do |t|
     t.string   "text"
     t.integer  "user_id"
     t.integer  "picture_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "comments", ["picture_id"], name: "index_comments_on_picture_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "pictures", force: :cascade do |t|
-    t.string  "description"
-    t.integer "category_id"
-    t.string  "photo"
+    t.string   "description"
+    t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "photo"
   end
 
   add_index "pictures", ["category_id"], name: "index_pictures_on_category_id", using: :btree

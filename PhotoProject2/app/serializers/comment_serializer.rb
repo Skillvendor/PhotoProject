@@ -6,4 +6,5 @@ class CommentSerializer < ActiveModel::Serializer
   attribute :text
   attribute :user_id
   attribute :picture_id
+  attribute :created_at
 end

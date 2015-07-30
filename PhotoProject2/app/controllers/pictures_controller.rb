@@ -4,8 +4,6 @@ class PicturesController < ApplicationController
 	before_action :set_pic, only: [:show, :destroy, :update]
 	before_action :get_comments, only: [:show]
 
-  respond_to :json
-
 	def index
 		@pictures = Picture.all
     render json: serialize_models(@pictures)

@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
 
   before_action :get_comment, only: [:destroy, :update] 
 
+  respond_to :json
+
 	def create
 		@comment = Comment.new(comment_params.merge(:user_id => current_user.id))
     if @comment.save
