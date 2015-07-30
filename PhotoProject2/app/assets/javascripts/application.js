@@ -12,6 +12,7 @@
 //= require controllers/main_controller
 //= require services/categories_service
 //= require services/photo_service
-
+//= require directives/navbar_directive
+//= require directives/footer_directive
 
 
