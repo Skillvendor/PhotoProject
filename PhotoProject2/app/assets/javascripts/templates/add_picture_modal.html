@@ -1,0 +1,41 @@
+<md-dialog aria-label="Add picture" id="add-picture-modal">
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Add picture</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="answer('quit')">
+      <md-icon class="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div>
+      <!-- <img ng-src="{{image}}"/> -->
+      <picture picturefill>
+      <!--[if IE 9]><video style="display: none;"><![endif]-->
+      <!-- Displays with 2 device pixels per CSS pixel -->
+      <!-- <source srcset="{{image}}"/> -->
+      <!-- Preset media queries -->
+      <!-- <source srcset="{{image}}" pf-media="screen-lg"/> -->
+      <!-- <source srcset="{{image}}" pf-media="screen-md"/> -->
+      <!-- <source srcset="{{image}}" pf-media="screen-sm"/> -->
+      <!-- <source srcset="{{image}}" pf-media="screen-xs"/> -->
+      <!-- Custom media query -->
+      <source srcset="{{image}}" pf-media="(max-width: 400px)"/>
+      <!--[if IE 9]></video><![endif]-->
+          <img srcset="{{image}}"/>
+      </picture>
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="answer('quit')" class="md-primary">
+      Quit
+    </md-button>
+    <md-button ng-click="answer('upload')" class="md-primary">
+      Upload
+    </md-button>
+  </div>
+  </form>
+</md-dialog>

@@ -4,6 +4,7 @@
     "angular": "latest",
     "angular-route": "latest",
     "angular-resource": "latest",
-    "angular-material": "latest"
+    "angular-material": "latest",
+    "angular-picture": "latest"
   }
 }
