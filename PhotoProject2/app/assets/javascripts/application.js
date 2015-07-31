@@ -4,6 +4,9 @@
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
 //= require angular-rails-templates
+//= require angular-animate/angular-animate
+//= require angular-aria/angular-aria
+//= require angular-material/angular-material
 //= require bootstrap-material-design
 //= require_tree .
 
