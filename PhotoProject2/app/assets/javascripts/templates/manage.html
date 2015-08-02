@@ -1,10 +1,8 @@
-<md-button class="md-fab left" aria-label="Add picture">
-	<input ng-model="photo" class="upload"
-	       onchange="angular.element(this).scope().uploadPhoto(this)"
-	       type="file" accept="image/*"/>
-	<md-icon class="material-icons">add</md-icon>
-	<md-tooltip>
-		Add picture
-	</md-tooltip>
-</md-button>
+ <label class="md-warn md-raised md-button" md-ink-ripple for="file-input">
+    <md-icon class="material-icons">add</md-icon>
+ </label>
 
+<input id="file-input" type="file" 
+	   ng-model="photo" class="upload"
+	   onchange="angular.element(this).scope().uploadPhoto(this)"
+	   accept="image/*"/>

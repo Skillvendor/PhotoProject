@@ -11,21 +11,7 @@
   </md-toolbar>
   <md-dialog-content>
     <div>
-      <!-- <img ng-src="{{image}}"/> -->
-      <picture picturefill>
-      <!--[if IE 9]><video style="display: none;"><![endif]-->
-      <!-- Displays with 2 device pixels per CSS pixel -->
-      <!-- <source srcset="{{image}}"/> -->
-      <!-- Preset media queries -->
-      <!-- <source srcset="{{image}}" pf-media="screen-lg"/> -->
-      <!-- <source srcset="{{image}}" pf-media="screen-md"/> -->
-      <!-- <source srcset="{{image}}" pf-media="screen-sm"/> -->
-      <!-- <source srcset="{{image}}" pf-media="screen-xs"/> -->
-      <!-- Custom media query -->
-      <source srcset="{{image}}" pf-media="(max-width: 400px)"/>
-      <!--[if IE 9]></video><![endif]-->
-          <img srcset="{{image}}"/>
-      </picture>
+      <img ng-src="{{image}}" style="max-width: 640px; max-height: 480px;"/>
     </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">

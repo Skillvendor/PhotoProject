@@ -17,9 +17,7 @@ ActiveRecord::Schema.define(version: 20150727125108) do
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -36,8 +34,10 @@ ActiveRecord::Schema.define(version: 20150727125108) do
   create_table "pictures", force: :cascade do |t|
     t.string   "description"
     t.integer  "category_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
     t.string   "photo"
   end
 
