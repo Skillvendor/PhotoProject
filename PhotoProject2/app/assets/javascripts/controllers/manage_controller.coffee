@@ -20,7 +20,7 @@ angular.module('App')
 			resolve:
                 image: -> return $scope.imagePreview
 		)
-		
+
 ]
 
 angular.module('App')
