@@ -57,6 +57,9 @@ GEM
       sass (>= 3.3.0)
     bower-rails (0.10.0)
     builder (3.2.2)
+    bullet (4.14.7)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.9.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -156,6 +159,8 @@ GEM
       slop (~> 3.4)
       win32console (~> 1.3)
     rack (1.6.4)
+    rack-mini-profiler (0.9.6)
+      rack (>= 1.1.3)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.0)
@@ -224,6 +229,7 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uniform_notifier (1.9.0)
     warden (1.2.3)
       rack (>= 1.0)
     web-console (2.2.1)
@@ -242,6 +248,7 @@ DEPENDENCIES
   angular-rails-templates
   bootstrap-material-design
   bower-rails
+  bullet
   carrierwave (= 0.10.0)
   coffee-rails (~> 4.1.0)
   devise
@@ -253,6 +260,7 @@ DEPENDENCIES
   mini_magick (= 3.8.0)
   pg (= 0.17.1)
   pry
+  rack-mini-profiler
   rails (= 4.2.0)
   rails-angular-material
   sass-rails (~> 5.0)

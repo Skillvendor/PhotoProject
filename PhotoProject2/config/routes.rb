@@ -1,3 +1,5 @@
+require 'api_constraints'
+
 Rails.application.routes.draw do
 
   devise_for :users, controllers: {
@@ -6,11 +8,18 @@ Rails.application.routes.draw do
 
 
   root to: 'pictures#index'
+  resources :categories
+  resources :pictures
+  resources :comments, only: [:create, :destroy]
+  get 'categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
 
-  scope '/api' do
-    resources :categories
-    resources :pictures
-    resources :comments, only: [:create, :destroy]
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+      resources :categories
+      resources :pictures
+      resources :comments, only: [:create, :destroy]
+      get 'categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
+    end
   end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
-	include SerializerModule
+  include SerializerModule
 
-	before_action :set_category, only: [:destroy, :update]
+  before_action :set_category, only: [:destroy, :update, :show]
 
   before_filter only: [:create, :update] do
     unless params.has_key?('category')
@@ -11,18 +11,22 @@ class CategoriesController < ApplicationController
 
   respond_to :json
 
-	def index
-		@categories = Category.all
+  def index
+    @categories = Category.all
     render json: serialize_models(@categories)
-	end
+  end
 
   def new
   end
 
-	def create 
-		@category = Category.new(category_params)
+  def show
+    render json: serialize_model(@category, include: ['pictures'])
+  end
+
+  def create 
+    @category = Category.new(category_params)
     if @category.save
-      render json: serialize_model(@category, is_collection: false)
+      render json: serialize_model(@category)
     else
       render json: @category.errors
     end
@@ -44,13 +48,18 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def categories_with_pics
+    @categories = Category.all
+    render json: serialize_models(@categories, include: ['pictures'])
+  end
+
 private
 
-	def category_params
-		params.require(:category).permit(:name)
-	end
+  def category_params
+    params.require(:category).permit(:name)
+  end
 
-	def set_category
-		@category = Category.where(params[:id]).first
-	end
+  def set_category
+    @category = Category.where(id: params[:id]).first
+  end
 end
