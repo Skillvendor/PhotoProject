@@ -1,0 +1,34 @@
+// http://www.jshint.com/docs/options/
+{
+  // Missing semicolons
+  "asi": false,
+  // Enforces camelCase convention.
+  "camelcase": false,
+  // Enforces snake_case convention.
+  "snakecase": false,
+  // Adds curly braces to statements.
+  "curly": true,
+  "node": true,
+  "browser": true,
+  "esnext": true,
+  "bitwise": true,
+  "eqeqeq": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": "single",
+  "regexp": true,
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "trailing": true,
+  "smarttabs": true,
+  // This option warns when you have an empty block in your code.
+  "noempty": false,
+  "globals": {
+    "angular": false,
+    "picturefill": false
+  }
+}
