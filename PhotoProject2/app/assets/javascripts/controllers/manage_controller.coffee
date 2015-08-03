@@ -24,9 +24,11 @@ angular.module('App')
 ]
 
 angular.module('App')
-.controller 'AddPictureModalController', ['$scope', '$mdDialog', 'image', ($scope, $mdDialog, image) ->
+.controller 'AddPictureModalController', ['$scope', '$mdDialog', 'image', 'CategoryResource', ($scope, $mdDialog, image, CategoryResource) ->
 	
 	$scope.image = image
+	CategoryResource.get (result) -> 
+		$scope.categories = result.data
 
 	$scope.hide = ->
 		$mdDialog.hide()
@@ -34,7 +36,7 @@ angular.module('App')
 	$scope.cancel = ->
 		$mdDialog.cancel()
 
-	$scope.answer = (answer) ->
-		$mdDialog.hide(answer)
+	$scope.uploadPhoto = ->
+		$scope.photos.save
 
 ]

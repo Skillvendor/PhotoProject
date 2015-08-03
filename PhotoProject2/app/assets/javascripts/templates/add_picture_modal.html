@@ -1,27 +1,63 @@
-<md-dialog aria-label="Add picture" id="add-picture-modal">
+<md-dialog aria-label="Add picture" id="upload-modal">
   <form>
-  <md-toolbar>
+
+  <md-toolbar id="upload-title">
     <div class="md-toolbar-tools">
-      <h2>Add picture</h2>
+      <h5>Add picture</h5>
       <span flex></span>
-      <md-button class="md-icon-button" ng-click="answer('quit')">
+      <md-button class="md-icon-button" ng-click="cancel()">
       <md-icon class="material-icons">close</md-icon>
       </md-button>
     </div>
   </md-toolbar>
+
   <md-dialog-content>
-    <div>
-      <img ng-src="{{image}}" style="max-width: 640px; max-height: 480px;"/>
-    </div>
+      <div class="row">
+          <div class="col-md-8" id="upload-content">
+             <img ng-src="{{image}}" id="upload-photo"/>
+          </div>
+          <div class="col-md-4" id="upload-form">
+             <md-content layout-padding>
+              <form name="photoForm">
+                <div layout layout-sm="column">
+
+                <md-input-container flex>
+                  <label>Title</label>
+                  <input ng-model="photo.title">
+                </md-input-container>
+
+                </div>
+
+                <div layout layout-sm="column">
+
+                <md-input-container flex>
+                  <label>Description (optionally)</label>
+                  <input ng-model="photo.description">
+                </md-input-container>
+
+                </div>
+
+                <div layout layout-sm="column">
+                  <md-select placeholder="State" ng-model="ctrl.userState">
+                      <md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">{{state.abbrev}}</md-option>
+                  </md-select>
+                </div>
+              </form>
+            </md-content>
+          </div>
+      </div>
   </md-dialog-content>
-  <div class="md-actions" layout="row">
+
+  <div class="md-actions" layout="row" id="upload-buttons">
     <span flex></span>
-    <md-button ng-click="answer('quit')" class="md-primary">
+    <md-button class="md-primary" ng-click="cancel()">
       Quit
     </md-button>
-    <md-button ng-click="answer('upload')" class="md-primary">
+
+    <md-button class="md-primary" ng-click="uploadPhoto()">
       Upload
     </md-button>
   </div>
+
   </form>
 </md-dialog>
