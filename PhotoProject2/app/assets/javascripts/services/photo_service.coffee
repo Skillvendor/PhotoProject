@@ -1,6 +1,9 @@
 #= require routes
 
 angular.module('App')
-.factory 'PhotoResource', ['$resource', ($resource) -> 
-	 $resource 'api/pictures/:id.json', {id: '@id'}
+.factory 'PhotoService', ['$http', ($http) -> 
+ 	all: -> 
+ 		$http.get('/api/pictures')
+ 	save: (picture) ->
+ 		$http.post('/api/pictures', picture)
 ]
