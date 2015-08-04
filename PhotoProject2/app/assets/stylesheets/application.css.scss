@@ -29,8 +29,36 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
+    
+#upload-modal{
+    width: 100%;
+    height: 100%;
+}
 
-#add-picture-modal{
-	width: 100%;
-	height: 100%;
+#upload-content{
+    height: 64vh;
+}
+
+#upload-photo{
+    max-width: 640px;
+    max-height: 480px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#upload-form{
+    height: 64vh;
+}
+
+#upload-buttons{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#upload-dropdown{
+    width: 100%;
 }

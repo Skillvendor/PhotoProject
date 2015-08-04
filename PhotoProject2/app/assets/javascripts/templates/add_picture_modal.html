@@ -1,41 +1,52 @@
-<md-dialog aria-label="Add picture" id="add-picture-modal">
+<md-dialog aria-label="Add picture" id="upload-modal">
   <form>
-  <md-toolbar>
+
+  <md-toolbar id="upload-title">
     <div class="md-toolbar-tools">
-      <h2>Add picture</h2>
+      <h5>Add picture</h5>
       <span flex></span>
-      <md-button class="md-icon-button" ng-click="answer('quit')">
+      <md-button class="md-icon-button" ng-click="cancel()">
       <md-icon class="material-icons">close</md-icon>
       </md-button>
     </div>
   </md-toolbar>
+
   <md-dialog-content>
-    <div>
-      <!-- <img ng-src="{{image}}"/> -->
-      <picture picturefill>
-      <!--[if IE 9]><video style="display: none;"><![endif]-->
-      <!-- Displays with 2 device pixels per CSS pixel -->
-      <!-- <source srcset="{{image}}"/> -->
-      <!-- Preset media queries -->
-      <!-- <source srcset="{{image}}" pf-media="screen-lg"/> -->
-      <!-- <source srcset="{{image}}" pf-media="screen-md"/> -->
-      <!-- <source srcset="{{image}}" pf-media="screen-sm"/> -->
-      <!-- <source srcset="{{image}}" pf-media="screen-xs"/> -->
-      <!-- Custom media query -->
-      <source srcset="{{image}}" pf-media="(max-width: 400px)"/>
-      <!--[if IE 9]></video><![endif]-->
-          <img srcset="{{image}}"/>
-      </picture>
-    </div>
+      <div class="row">
+          <div class="col-md-8" id="upload-content">
+             <img ng-src="{{picture.photo}}" id="upload-photo"/>
+          </div>
+          <div class="col-md-4" id="upload-form">
+             <md-content layout-padding>
+              <form name="photoForm">
+
+                <div layout layout-sm="column">
+                  <md-input-container flex>
+                    <label>Title</label>
+                    <input ng-model="picture.description">
+                  </md-input-container>
+                </div>
+
+                <md-select placeholder="Category" ng-model="picture.category_id" style="min-width:100px; width: 130px;">
+                  <md-option ng-repeat="category in categories" value="{{category.id}}" style="min-width:100px; width: 130px;">{{category.attributes.name}}</md-option>
+                </md-select>
+
+              </form>
+            </md-content>
+          </div>
+      </div>
   </md-dialog-content>
-  <div class="md-actions" layout="row">
+
+  <div class="md-actions" layout="row" id="upload-buttons">
     <span flex></span>
-    <md-button ng-click="answer('quit')" class="md-primary">
+    <md-button class="md-primary" ng-click="cancel()">
       Quit
     </md-button>
-    <md-button ng-click="answer('upload')" class="md-primary">
+
+    <md-button class="md-primary" ng-click="uploadPhoto()">
       Upload
     </md-button>
   </div>
+
   </form>
 </md-dialog>

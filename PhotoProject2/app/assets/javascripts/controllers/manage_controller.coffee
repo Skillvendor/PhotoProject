@@ -1,7 +1,13 @@
 #= require routes
 
 angular.module('App')
-.controller 'ManageController', ['$scope', '$mdDialog', ($scope, $mdDialog) ->
+.controller 'ManageController', ['$scope', '$mdDialog', 'PhotoService', ($scope, $mdDialog, PhotoService) ->
+
+	PhotoService.all()
+		.success (result) ->
+			$scope.pictures = result.data
+		.error ->
+			alert('There has been an error. Please try again later')
 
 	$scope.uploadPhoto = (element) ->
         photofile = element.files[0]
@@ -18,23 +24,31 @@ angular.module('App')
 			templateUrl: 'add_picture_modal.html',
 			targetEvent: event,
 			resolve:
-                image: -> return $scope.imagePreview
+                photo: -> return $scope.imagePreview
 		)
 
 ]
 
 angular.module('App')
-.controller 'AddPictureModalController', ['$scope', '$mdDialog', 'image', ($scope, $mdDialog, image) ->
+.controller 'AddPictureModalController', ['$scope', '$mdDialog', 'photo', 'CategoryService', 'PhotoService', ($scope, $mdDialog, photo, CategoryService, PhotoService) ->
 	
-	$scope.image = image
+	$scope.picture = {photo: photo}
 
-	$scope.hide = ->
-		$mdDialog.hide()
+	CategoryService.all()
+		.success (result) -> 
+			$scope.categories = result.data
+		.error ->
+			alert('There has been an error. Please try again later')
+			$mdDialog.cancel()
 
 	$scope.cancel = ->
 		$mdDialog.cancel()
 
-	$scope.answer = (answer) ->
-		$mdDialog.hide(answer)
-
+	$scope.uploadPhoto = ->
+		PhotoService.save($scope.picture)
+			.success (result) ->
+				$mdDialog.hide()
+			.error ->
+				alert('There has been an error. Please try again later')
+				$mdDialog.hide()
 ]
