@@ -27,7 +27,7 @@ module Api
         if @pic.save
           render json: serialize_model(@pic)
         else
-          render json: @pic.errors
+          render json: @pic.errors, :status => :bad_request
         end
       end
 
@@ -39,7 +39,7 @@ module Api
         if @pic.update_attributes(picture_params)
           render json: serialize_model(@pic)
         else
-          render json: @pic.errors
+          render json: @pic.errors, :status => :bad_request
         end
       end
 
@@ -47,7 +47,7 @@ module Api
       	if @pic.destroy
           head :no_content
         else
-          render json: @pic.errors
+          render json: @pic.errors, :status => :bad_request
         end
       end
 

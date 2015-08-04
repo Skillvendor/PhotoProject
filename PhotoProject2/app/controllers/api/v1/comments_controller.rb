@@ -19,7 +19,7 @@ module Api
         if @comment.save
           render json: serialize_model(@comment)
         else
-          render json: @comment.errors
+          render json: @comment.errors, :status => :bad_request
         end
     	end
 
@@ -35,7 +35,7 @@ module Api
         if @comment.update_attributes(comment_params)
           render json: serialize_model(@comment)
         else
-          render json: @comment.errors
+          render json: @comment.errors, :status => :bad_request
         end
       end
 

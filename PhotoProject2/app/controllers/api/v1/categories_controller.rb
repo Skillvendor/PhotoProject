@@ -30,7 +30,7 @@ module Api
         if @category.save
           render json: serialize_model(@category)
         else
-          render json: @category.errors
+          render json: @category.errors, :status => :bad_request
         end
       end
 
@@ -38,7 +38,7 @@ module Api
         if @category.destroy
           head :no_content 
         else
-          render json: serialize_model(@category.errors)
+          render json: serialize_model(@category.errors), :status => :bad_request
         end
       end
 
@@ -46,7 +46,7 @@ module Api
         if @category.update_attributes(category_params)
           render json: serialize_model(@category)
         else
-          render json: @category.errors
+          render json: @category.errors, :status => :bad_request
         end
       end
 
