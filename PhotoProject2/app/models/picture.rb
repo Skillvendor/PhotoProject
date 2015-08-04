@@ -3,4 +3,5 @@ class Picture < ActiveRecord::Base
 	has_many :comments, dependent: :destroy
 	mount_uploader :photo, PhotoUploader
 	validates_presence_of :photo
+	validates :title, presence: true
 end
