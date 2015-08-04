@@ -58,7 +58,7 @@ module Api
     	end
 
     	def picture_params
-    		params.require(:picture).permit(:photo, :description, :category_id)
+    		params.require(:picture).permit(:title, :photo, :description, :category_id)
     	end
 
     	def get_comments
