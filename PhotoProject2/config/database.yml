@@ -12,7 +12,7 @@ development:
   database: photo_development
 
 
-  test:
+test:
   <<: *default
   database: photo_test
 
