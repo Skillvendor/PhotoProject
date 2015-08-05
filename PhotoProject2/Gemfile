@@ -47,6 +47,7 @@ gem 'bootstrap-material-design'
 #for tests
 gem 'rspec-rails'
 gem 'factory_girl'
+gem 'faker'
 
 # user management
 gem 'devise'
