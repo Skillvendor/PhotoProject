@@ -19,15 +19,11 @@ module Api
     	end
 
     	def create
-        binding.pry
     		@pic = Picture.new(picture_params)
-        binding.pry
         if @pic.save
-          binding.pry
           render json: serialize_model(@pic)
         else
-          binding.pry
-          render json: @pic.errors, :status => :continue
+          render json: @pic.errors, :status => :bad_request
         end
       end
 
