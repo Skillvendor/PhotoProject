@@ -44,6 +44,9 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 # injects MaterialDesign into  asset pipeline
 gem 'bootstrap-material-design'
+
+gem 'angularjs-file-upload-rails', '~> 1.1.6'
+
 #for tests
 gem 'rspec-rails'
 gem 'factory_girl'

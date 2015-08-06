@@ -2,12 +2,18 @@
     <md-icon class="material-icons">add</md-icon>
  </label>
 
-<input id="file-input" type="file" 
+<!-- <input id="file-input" type="file" 
 	   ng-model="photo" class="upload"
 	   onchange="angular.element(this).scope().uploadPhoto(this)"
-	   accept="image/*"/>
+	   accept="image/*"/> -->
 
-
-<div ng-repeat="photo in photos">
-	<img ng-src="{{photo.attributes.photo.thumb.url}}"/>
-</div>
+<input id="file-input" type="file" class="upload"
+	   onchange="angular.element(this).scope().uploadPhoto(this)"
+	   nv-file-select uploader="uploader"/>
+<!-- 
+<ul>
+    <li ng-repeat="item in uploader.queue">
+        Name: <span ng-bind="item.file.name"></span><br/>
+        <button ng-click="item.upload()">upload</button>
+    </li>
+</ul> -->

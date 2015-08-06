@@ -42,6 +42,7 @@ GEM
       railties (>= 3.1)
       sprockets (~> 2)
       tilt
+    angularjs-file-upload-rails (1.1.6)
     arel (6.0.2)
     autoprefixer-rails (5.2.1.1)
       execjs
@@ -266,6 +267,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   angular-rails-templates
+  angularjs-file-upload-rails (~> 1.1.6)
   bootstrap-material-design
   bower-rails
   bullet

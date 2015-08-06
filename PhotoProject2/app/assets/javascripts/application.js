@@ -9,6 +9,7 @@
 //= require angular-material/angular-material
 //= require bootstrap-material-design
 //= require angular-picture/src/angular-picture
+//= require angularjs-file-upload
 //= require_tree .
 
 //app related stuff

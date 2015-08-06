@@ -1,7 +1,9 @@
 #= require routes
 
 angular.module('App')
-.controller 'ManageController', ['$scope', '$mdDialog', 'PhotoService', ($scope, $mdDialog, PhotoService) ->
+.controller 'ManageController', ['$scope', '$mdDialog', 'PhotoService', 'FileUploader', ($scope, $mdDialog, PhotoService, FileUploader) ->
+
+	$scope.uploader = new FileUploader({url: '/api/pictures'})
 
 	PhotoService.all()
 		.success (result) ->
@@ -11,10 +13,12 @@ angular.module('App')
 
 	$scope.uploadPhoto = (element) ->
         photofile = element.files[0]
+        $scope.uploader.clearQueue()
         reader = new FileReader()
         reader.onload = (e) ->
             $scope.$apply ->
-                $scope.imagePreview = e.target.result
+                $scope.uploader.addToQueue(photofile)
+                $scope.photoPreview = e.target.result
                 $scope.showAddPictureModal(this)
         reader.readAsDataURL(photofile)
 
@@ -24,15 +28,17 @@ angular.module('App')
 			templateUrl: 'add_picture_modal.html',
 			targetEvent: event,
 			resolve:
-                photo: -> return $scope.imagePreview
+                uploader: -> return $scope.uploader
+                photoPreview: -> return $scope.photoPreview
 		)
 
 ]
 
 angular.module('App')
-.controller 'AddPictureModalController', ['$scope', '$mdDialog', 'photo', 'CategoryService', 'PhotoService', ($scope, $mdDialog, photo, CategoryService, PhotoService) ->
+.controller 'AddPictureModalController', ['$scope', '$mdDialog', 'uploader', 'photoPreview', 'CategoryService', 'PhotoService', ($scope, $mdDialog, uploader, photoPreview, CategoryService, PhotoService) ->
 	
-	$scope.picture = {photo: photo}
+	$scope.photoPreview = photoPreview
+	$scope.picture = uploader.queue[0]
 
 	CategoryService.all()
 		.success (result) -> 
@@ -45,10 +51,11 @@ angular.module('App')
 		$mdDialog.cancel()
 
 	$scope.uploadPhoto = ->
-		PhotoService.save($scope.picture)
-			.success (result) ->
-				$mdDialog.hide()
-			.error ->
-				alert('There has been an error. Please try again later')
-				$mdDialog.hide()
+		uploader.uploadItem($scope.picture)
+		#PhotoService.save($scope.picture)
+	    #	.success (result) ->
+		#		$mdDialog.hide()
+		#	.error ->
+		#		alert('There has been an error. Please try again later')
+		#		$mdDialog.hide()
 ]
