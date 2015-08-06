@@ -35,7 +35,7 @@ angular.module('App')
 angular.module('App')
 .controller 'AddPictureModalController', ['$scope', '$mdDialog', 'photoPreview', 'CategoryService', 'PhotoService', ($scope, $mdDialog, photoPreview, CategoryService, PhotoService) ->
 	
-	$scope.picture = {photo: photoPreview, description: ""}
+	$scope.picture = {photo: photoPreview}
 
 	CategoryService.all()
 		.success (result) -> 

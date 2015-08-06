@@ -5,5 +5,5 @@ angular.module('App')
  	all: -> 
  		$http.get('/api/pictures')
  	save: (picture) ->
- 		$http.post('/api/pictures', picture)
+ 		$http.post('/api/pictures', {picture: picture})
 ]
