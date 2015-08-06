@@ -5,6 +5,7 @@
     "angular-route": "latest",
     "angular-resource": "latest",
     "angular-material": "latest",
-    "angular-picture": "latest"
+    "angular-picture": "latest",
+    "angular-base64": "latest"
   }
 }

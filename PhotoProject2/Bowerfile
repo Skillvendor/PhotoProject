@@ -3,4 +3,5 @@ asset 'angular-route'
 asset 'angular-resource'
 asset 'angular-material'
 asset 'angular-picture'
+asset 'angular-base64'
 # vim: ft=ruby
