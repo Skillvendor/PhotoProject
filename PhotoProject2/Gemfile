@@ -69,7 +69,7 @@ group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   # gem 'debugger'
   #test bottlenecks
-	# gem 'rack-mini-profiler'
+	#gem 'rack-mini-profiler'
 	#test for eager loading
 	gem 'bullet'
   # Access an IRB console on exception pages or by using <%= console %> in views
