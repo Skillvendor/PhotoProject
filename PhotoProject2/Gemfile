@@ -52,6 +52,8 @@ gem 'angularjs-file-upload-rails', '~> 1.1.6'
 gem 'rspec-rails'
 gem 'factory_girl'
 gem 'faker'
+gem 'shoulda-matchers'
+gem 'shoulda'
 
 # user management
 gem 'devise'
@@ -71,7 +73,10 @@ group :development, :test do
   #test bottlenecks
 	#gem 'rack-mini-profiler'
 	#test for eager loading
+
 	gem 'bullet'
+  gem 'webrat'
+  gem "shoulda-kept-assign-to"
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

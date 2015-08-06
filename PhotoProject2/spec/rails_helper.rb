@@ -6,9 +6,14 @@ require File.dirname(__FILE__) + "/factories"
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f} 
 RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]  # default, enables both `should` and `expect`
+  end
 end
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
