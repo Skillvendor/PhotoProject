@@ -6,7 +6,11 @@ module Api
     	before_action :set_pic, only: [:show, :destroy, :update]
     	before_action :get_comments, only: [:show]
 
-      
+      before_filter only: [:create] do
+        unless params.has_key?('photo') 
+          render nothing: true, status: :bad_request
+        end
+      end
 
       respond_to :json
 
