@@ -11,7 +11,7 @@ module Api
           render nothing: true, status: :bad_request
         end
       end
-
+      
       respond_to :json
 
     	def index
