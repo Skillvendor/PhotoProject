@@ -5,11 +5,14 @@ angular.module('App')
 
 	$scope.uploader = new FileUploader({url: '/api/pictures'})
 
-	PhotoService.all()
-		.success (result) ->
-			$scope.pictures = result.data
-		.error ->
-			alert('There has been an error. Please try again later')
+	$scope.getPictures = ->
+		PhotoService.all()
+			.success (result) ->
+				$scope.pictures = result.data
+			.error ->
+				alert('There has been an error. Please try again later')
+	
+	$scope.getPictures()
 
 	$scope.uploadPhoto = (element) ->
         photofile = element.files[0]
@@ -29,7 +32,12 @@ angular.module('App')
 			resolve:
                 photoPreview: -> return $scope.photoPreview
 		)
-
+		.then (answer) ->
+			if answer == 'success'
+				$scope.getPictures()
+			else
+				alert('There has been an error. Please try again later')
+		
 ]
 
 angular.module('App')
@@ -50,8 +58,7 @@ angular.module('App')
 	$scope.uploadPhoto = ->
 		PhotoService.save($scope.picture)
 	    	.success (result) ->
-				$mdDialog.hide()
+				$mdDialog.hide('success')
 			.error ->
-				alert('There has been an error. Please try again later')
-				$mdDialog.hide()
+				$mdDialog.hide('error')
 ]
