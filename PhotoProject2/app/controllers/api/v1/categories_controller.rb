@@ -15,7 +15,7 @@ module Api
 
     	def index
     		@categories = Category.all
-        render json: serialize_models(@categories)
+        render json: serialize_models(@categories), :status => :ok
     	end
 
       def new
@@ -28,25 +28,25 @@ module Api
     	def create 
     		@category = Category.new(category_params)
         if @category.save
-          render json: serialize_model(@category)
+          render json: serialize_model(@category), :status => :created
         else
-          render json: @category.errors, :status => :bad_request
+          render json: { :errors => @category.errors }, :status => :bad_request
         end
       end
 
       def destroy
         if @category.destroy
-          head :no_content 
+          head :no_content, :status => :no_content
         else
-          render json: serialize_model(@category.errors), :status => :bad_request
+          render json: { errors: @category.errors }, :status => :bad_request
         end
       end
 
       def update
         if @category.update_attributes(category_params)
-          render json: serialize_model(@category)
+          render json: serialize_model(@category), :status => :accepted
         else
-          render json: @category.errors, :status => :bad_request
+          render json: { :errors => @category.errors }, :status => :bad_request
         end
       end
 

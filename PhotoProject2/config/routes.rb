@@ -11,14 +11,13 @@ Rails.application.routes.draw do
   resources :categories
   resources :pictures
   resources :comments, only: [:create, :destroy]
-  get 'categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
 
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+      get 'categories/categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
       resources :categories
       resources :pictures
-      resources :comments, only: [:create, :destroy]
-      get 'categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
+      resources :comments, only: [:create, :destroy]   
     end
   end
   # Example of regular route:
