@@ -1,9 +1,7 @@
 #= require routes
 
 angular.module('App')
-.controller 'ManageController', ['$scope', '$mdDialog', 'PhotoService', 'FileUploader', '$base64', ($scope, $mdDialog, PhotoService, FileUploader) ->
-
-	$scope.uploader = new FileUploader({url: '/api/pictures'})
+.controller 'ManageController', ['$scope', '$mdDialog', 'PhotoService', ($scope, $mdDialog, PhotoService) ->
 
 	$scope.getPictures = ->
 		PhotoService.all()
@@ -16,7 +14,6 @@ angular.module('App')
 
 	$scope.uploadPhoto = (element) ->
         photofile = element.files[0]
-        $scope.uploader.clearQueue()
         reader = new FileReader()
         reader.onload = (e) ->
             $scope.$apply ->
@@ -35,8 +32,15 @@ angular.module('App')
 		.then (answer) ->
 			if answer == 'success'
 				$scope.getPictures()
-			else
+			else if answer == 'error'
 				alert('There has been an error. Please try again later')
+
+			# clear all files from controller
+			angular.forEach(
+			    angular.element("input[type='file']"),
+			    (inputElem) -> 
+			    	angular.element(inputElem).val(null)
+			)
 		
 ]
 
@@ -49,11 +53,10 @@ angular.module('App')
 		.success (result) -> 
 			$scope.categories = result.data
 		.error ->
-			alert('There has been an error. Please try again later')
-			$mdDialog.cancel()
+			$mdDialog.hide('error')
 
 	$scope.cancel = ->
-		$mdDialog.cancel()
+		$mdDialog.hide('cancel')
 
 	$scope.uploadPhoto = ->
 		PhotoService.save($scope.picture)

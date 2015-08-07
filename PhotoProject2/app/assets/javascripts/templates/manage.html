@@ -3,8 +3,7 @@
  </label>
 
 <input id="file-input" type="file" class="upload"
-	   onchange="angular.element(this).scope().uploadPhoto(this)"
-	   nv-file-select uploader="uploader"/>
+	   onchange="angular.element(this).scope().uploadPhoto(this)"/>
 
 <div >
 	<img ng-repeat="picture in pictures" ng-src="{{picture.attributes.photo.photo.thumb.url}}">
