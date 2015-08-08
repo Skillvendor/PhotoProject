@@ -72,6 +72,13 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 			it 'responds with 202' do
 				expect(response).to have_http_status(202)
 			end
+
+			it 'creates a resource' do
+				body = JSON.parse(response.body)
+				expect(body).to include('data')
+				data = body['data']
+				expect(data['attributes']['name']).to eq('new name')
+			end
 		end
 
 		context 'when it is not a valid request' do
@@ -116,9 +123,17 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 			get :categories_with_pics, :format => :json
 		end
 
+		it 'creates a resource' do
+			expect(response.content_type).to be(Mime::JSON.to_s)
+		end
+
 		it 'responds with resource' do
 			body = JSON.parse(response.body)
 			expect(body).to include('data')
+			body = body['data'][0]
+			expect(body).to include('id')
+			expect(body).to include('relationships')
+			expect(body).to include('attributes')
 		end
 
 		it 'responds with 200' do
@@ -126,5 +141,25 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 		end
 	end
 
+	describe 'GET /categories/:id (SHOW)' do
+		context 'when it is a valid request' do
+			before(:each) do
+				@category = FactoryGirl.create(:category)
+				get :show, :id => @category.id , :format => :json
+			end
 
+			it 'responds with resource' do
+				body = JSON.parse(response.body)
+				expect(body).to include('data')
+				body = body['data']
+				expect(body).to include('id')
+				expect(body).to include('relationships')
+				expect(body).to include('attributes')
+			end
+
+			it 'responds with 200' do
+				expect(response).to have_http_status(200)
+			end
+		end
+	end
 end

@@ -10,7 +10,7 @@ module Api
 
     	def index
     		@pictures = Picture.all
-        render json: serialize_models(@pictures)
+        render json: serialize_models(@pictures), :status => :ok
     	end
 
     	def new
@@ -19,9 +19,9 @@ module Api
     	def create
     		@pic = Picture.new(picture_params)
         if @pic.save
-          render json: serialize_model(@pic)
+          render json: serialize_model(@pic), :status => :created
         else
-          render json: @pic.errors, :status => :bad_request
+          render json: { :errors => @pic.errors }, :status => :bad_request
         end
       end
 
@@ -31,17 +31,17 @@ module Api
 
       def update
         if @pic.update_attributes(picture_params)
-          render json: serialize_model(@pic)
+          render json: serialize_model(@pic), :status => :accepted
         else
-          render json: @pic.errors, :status => :bad_request
+          render json: { :errors => @pic.errors }, :status => :bad_request
         end
       end
 
       def destroy
       	if @pic.destroy
-          head :no_content
+          head :no_content, :status => :no_content
         else
-          render json: @pic.errors, :status => :bad_request
+          render json: { :errors => @pic.errors }, :status => :bad_request
         end
       end
 
@@ -49,6 +49,7 @@ module Api
 
     	def set_pic
     		@pic = Picture.where(id: params[:id]).first
+
     	end
 
     	def picture_params
