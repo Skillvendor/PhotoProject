@@ -1,8 +1,6 @@
 module Api
   module V1
-    class CommentsController < ApplicationController
-      include SerializerModule
-
+    class CommentsController < Api::V1::BaseController
       before_action :check_login
       before_action :get_comment, only: [:destroy, :update] 
 

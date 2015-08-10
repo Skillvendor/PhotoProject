@@ -1,8 +1,6 @@
 module Api
   module V1
-    class PicturesController < ApplicationController
-    	include SerializerModule
-
+    class PicturesController < Api::V1::BaseController
     	before_action :set_pic, only: [:show, :destroy, :update]
     	before_action :get_comments, only: [:show]
       

@@ -1,8 +1,6 @@
 module Api
   module V1
-    class CategoriesController < ApplicationController
-    	include SerializerModule
-
+    class CategoriesController < Api::V1::BaseController
     	before_action :set_category, only: [:destroy, :update, :show]
 
       before_filter only: [:create, :update] do
