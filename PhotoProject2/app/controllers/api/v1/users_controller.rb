@@ -15,7 +15,7 @@ module Api
           sign_in(@user)
           render json: serialize_model(@user), :status => :created
         else
-          render json: { :errors => @user.errors }
+          render json: { :errors => @user.errors }, :status => 400
         end
       end
 
