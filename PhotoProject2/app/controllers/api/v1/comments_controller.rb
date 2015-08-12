@@ -44,7 +44,7 @@ module Api
     	end
 
       def get_comment
-        @comment = Comment.where(id: params[:id]).first
+        @comment = Comment.find_by_id(params[:id])
       end
 
       def check_login

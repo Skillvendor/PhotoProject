@@ -1,14 +1,14 @@
 require "rails_helper"
 
-
 RSpec.describe Api::V1::CommentsController, :type => :controller do
 
 	describe 'POST /comments' do
 		context 'when it is a valid request' do
 			before(:each) do
 				@category = FactoryGirl.create(:category)
-				@picture = FactoryGirl.create(:picture, :category_id => @category.id)
-				@user = FactoryGirl.create(:user)
+    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
+    		@user = FactoryGirl.create(:user)
+    		sign_in(@user)
 				params = FactoryGirl.build(:comment, :text => 'TestCom', :picture_id => @picture.id).attributes 
 				post :create, :comment => params , :format => :json
 			end
@@ -27,8 +27,12 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 
 		context 'when it is not a valid request' do
 			before(:each) do
-				params = FactoryGirl.build(:comment, :without_text).attributes 
-				post :create, :comments => params , :format => :json
+				@category = FactoryGirl.create(:category)
+    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
+    		@user = FactoryGirl.create(:user)
+    		sign_in(@user)
+				params = FactoryGirl.build(:comment, :without_text, :picture_id => @picture.id).attributes
+				post :create, :comment => params , :format => :json
 			end
 
 			it 'responds with 400' do
@@ -42,4 +46,48 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 		end
 	end
 
+	describe 'PATCH /api/comments/:id' do
+		context 'when it is a valid request' do
+			let(:attr) do 
+    		{ :text => 'update' }
+  		end
+
+			before(:each) do
+				@category = FactoryGirl.create(:category)
+    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
+    		@user = FactoryGirl.create(:user)
+    		sign_in(@user)
+				@comment = FactoryGirl.create(:comment, :picture_id => @picture.id, :user_id => @user.id)
+				patch :update, :id => @comment.id, :comment => attr , :format => :json
+			end
+
+			it 'creates a resource' do
+				body = JSON.parse(response.body)
+				expect(body).to include('data')
+				data = body['data']
+				expect(data['attributes']['text']).to eq('update')
+			end
+
+			it 'responds with 202' do
+				expect(response).to have_http_status(202)
+			end
+		end
+	end
+
+	describe 'DELETE /api/comments/:id' do
+		context 'when it is a valid request' do
+			before(:each) do
+				@category = FactoryGirl.create(:category)
+    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
+    		@user = FactoryGirl.create(:user)
+    		sign_in(@user)
+    		@comment = FactoryGirl.create(:comment, :picture_id => @picture.id, :user_id => @user.id)
+				delete :destroy, :id => @comment.id, :format => :json
+			end
+
+			it 'responds with 204' do
+				expect(response).to have_http_status(204)
+			end
+		end
+	end
 end

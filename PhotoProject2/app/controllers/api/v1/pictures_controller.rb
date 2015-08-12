@@ -46,8 +46,7 @@ module Api
     private
 
     	def set_pic
-    		@pic = Picture.where(id: params[:id]).first
-
+    		@pic = Picture.find_by_id(params[:id])
     	end
 
     	def picture_params

@@ -67,7 +67,7 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 		end
 	end
 
-	describe 'PATCH/PUT /pictures' do
+	describe 'PATCH/PUT /pictures/:id' do
 		context 'when it is a valid request' do
 			let(:attr) do 
     		{ :title => 'new title' }
@@ -117,7 +117,7 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 		end
 	end
 
-	describe 'DELETE /pictures' do
+	describe 'DELETE /pictures/:id' do
 		context 'when it is a valid request' do
 			before(:each) do
 				@pic = FactoryGirl.create(:picture)

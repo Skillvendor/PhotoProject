@@ -60,7 +60,7 @@ module Api
     	end
 
     	def set_category
-    		@category = Category.where(id: params[:id]).first
+    		@category = Category.find_by_id(params[:id])
     	end
     end
   end

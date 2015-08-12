@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       get 'categories/categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
       resources :categories
       resources :pictures
-      resources :comments, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy, :update]
     end
   end
 end
