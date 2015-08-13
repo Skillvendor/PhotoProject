@@ -54,6 +54,7 @@ gem 'factory_girl'
 gem 'faker'
 gem 'shoulda-matchers'
 gem 'shoulda'
+gem 'fuubar'
 
 # user management
 gem 'devise'

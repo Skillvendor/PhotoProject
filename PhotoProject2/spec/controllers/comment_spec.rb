@@ -1,14 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Api::V1::CommentsController, :type => :controller do
+	include_context 'comments'
 
 	describe 'POST /comments' do
 		context 'when it is a valid request' do
 			before(:each) do
-				@category = FactoryGirl.create(:category)
-    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
-    		@user = FactoryGirl.create(:user)
-    		sign_in(@user)
+				setup_requirements
 				params = FactoryGirl.build(:comment, :text => 'TestCom', :picture_id => @picture.id).attributes 
 				post :create, :comment => params , :format => :json
 			end
@@ -27,10 +25,7 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 
 		context 'when it is not a valid request' do
 			before(:each) do
-				@category = FactoryGirl.create(:category)
-    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
-    		@user = FactoryGirl.create(:user)
-    		sign_in(@user)
+				setup_requirements
 				params = FactoryGirl.build(:comment, :without_text, :picture_id => @picture.id).attributes
 				post :create, :comment => params , :format => :json
 			end
@@ -53,10 +48,7 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
   		end
 
 			before(:each) do
-				@category = FactoryGirl.create(:category)
-    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
-    		@user = FactoryGirl.create(:user)
-    		sign_in(@user)
+				setup_requirements
 				@comment = FactoryGirl.create(:comment, :picture_id => @picture.id, :user_id => @user.id)
 				patch :update, :id => @comment.id, :comment => attr , :format => :json
 			end
@@ -77,10 +69,7 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 	describe 'DELETE /api/comments/:id' do
 		context 'when it is a valid request' do
 			before(:each) do
-				@category = FactoryGirl.create(:category)
-    		@picture = FactoryGirl.create(:picture, :category_id => @category.id)
-    		@user = FactoryGirl.create(:user)
-    		sign_in(@user)
+				setup_requirements
     		@comment = FactoryGirl.create(:comment, :picture_id => @picture.id, :user_id => @user.id)
 				delete :destroy, :id => @comment.id, :format => :json
 			end
