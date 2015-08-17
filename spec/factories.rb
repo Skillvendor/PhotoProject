@@ -24,6 +24,10 @@ FactoryGirl.define do
   	trait :without_description do
   		description nil
   	end 
+
+  	trait :without_category do
+  		category_id nil
+  	end
 	end
 
 	factory :comment do |f|
