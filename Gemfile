@@ -46,6 +46,9 @@ gem 'bootstrap-material-design'
 
 gem 'angularjs-file-upload-rails', '~> 1.1.6'
 
+#reputation system
+gem 'activerecord-reputation-system'
+
 #for tests
 gem 'rspec-rails'
 gem 'factory_girl'

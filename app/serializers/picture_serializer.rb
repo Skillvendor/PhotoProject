@@ -13,4 +13,12 @@ class PictureSerializer < ActiveModel::Serializer
   has_many :comments do
   	Comment.where(picture_id: object)
   end
+
+  attribute :likes do
+   object.reputation_for(:likes)
+  end
+
+  attribute :dislikes do
+   object.reputation_for(:dislikes)
+  end
 end

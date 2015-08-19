@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   include SerializerModule
   
-  before_filter :render_single_page
+  before_action :render_single_page
 
    def render_single_page
     render 'layouts/application' if request.format == Mime::HTML

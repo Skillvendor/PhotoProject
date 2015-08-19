@@ -1,13 +1,13 @@
 module Api
   module V1
     class PicturesController < Api::V1::BaseController
-    	before_action :set_pic, only: [:show, :destroy, :update]
+    	before_action :set_pic, only: [:show, :destroy, :update, :like, :dislike]
     	before_action :get_comments, only: [:show]
       
       respond_to :json
 
     	def index
-    		@pictures = Picture.all
+    		@pictures = Picture.order_desc
         render json: serialize_models(@pictures), :status => :ok
     	end
 
@@ -43,6 +43,17 @@ module Api
         end
       end
 
+      def like
+        value = user.liked?(@pic) ? 0 : 1
+        @pic.add_or_update_evaluation(:likes, value, current_user)
+        render json: serialize_model(@pic, include: ['comments'])
+      end
+
+      def dislike
+        value = current_user.disliked?(@pic) ? 0 : 1
+        @pic.add_or_update_evaluation(:dislikes, value, current_user)
+        render json: serialize_model(@pic, include: ['comments'])
+      end
     private
 
     	def set_pic

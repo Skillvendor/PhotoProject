@@ -20,7 +20,12 @@ Rails.application.routes.draw do
 
       get 'categories/categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
       resources :categories
-      resources :pictures
+
+      resources :pictures do
+        member { post :like}
+        member { post :dislike }
+      end
+      
       resources :comments, only: [:create, :destroy, :update]
     end
   end

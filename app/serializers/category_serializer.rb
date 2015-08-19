@@ -7,6 +7,6 @@ class CategorySerializer < ActiveModel::Serializer
   attribute :pictures_count
 
   has_many :pictures do
-  	Picture.where(category_id: object)
+  	Picture.where(category_id: object).order_desc
   end
 end
