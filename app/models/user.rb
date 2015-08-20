@@ -7,11 +7,7 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :evaluations, class_name: "RSEvaluation", as: :source
 
-  def liked?(pic)
-  	pic.evaluators_for(:likes).include?(current_user)
-  end
-
-  def disliked?(pic)
-  	pic.evaluators_for(:dislikes).include?(current_user)
+  def voted?(name, pic)
+    pic.evaluators_for(name).include?(self)
   end
 end

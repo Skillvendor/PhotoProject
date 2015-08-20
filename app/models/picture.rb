@@ -10,5 +10,13 @@ class Picture < ActiveRecord::Base
 	validates :title, presence: true
 	validates :category_id, presence: true
 
-	scope :order_desc, -> { order(created_at: :desc)}
+	scope :order_desc, -> { order(id: :desc)}
+
+  def evaluate_reputation(name, user)
+		if user.voted?(name, self)
+      self.delete_evaluation(name, user)
+    else
+      self.add_evaluation(name, 1, user)
+    end
+  end  
 end
