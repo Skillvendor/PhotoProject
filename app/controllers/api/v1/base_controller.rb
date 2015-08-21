@@ -17,4 +17,8 @@ class Api::V1::BaseController < ApplicationController
       format.json { render :json => {:error => error.message}, :status => 500 }
     end
   end
+
+  def admin?
+    render json: { errors: { admin: "not an admin or not signed in" } }, status: :bad_request unless user_signed_in? && current_user.admin 
+  end
 end

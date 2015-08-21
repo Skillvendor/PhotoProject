@@ -4,13 +4,14 @@ require 'open-uri'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-RSpec.describe Api::V1::PicturesController, :type => :controller do
+RSpec.describe Api::V1::PicturesController, type: :controller do
 	let(:category) { FactoryGirl.create(:category) }
+	let(:user) { }
 
 	describe 'GET /pictures' do
 		before(:each) do
-			@picture = FactoryGirl.create(:picture, :category_id => category.id)
-      get :index, :format => :json
+			@picture = FactoryGirl.create(:picture, category_id: category.id)
+      get :index, format: :json
     end
 			
 		it 'creates a resource' do
@@ -34,10 +35,10 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 	describe 'POST /pictures' do
 		context 'when it is a valid request' do
 			before(:each) do
-				params = FactoryGirl.build(:picture, :title => 'TestPic', :category_id => category.id).attributes
+				params = FactoryGirl.build(:picture, title: 'TestPic', category_id: category.id).attributes
 				file_contents = "data:image/jpeg;base64," + Base64.encode64(open("#{Rails.root}/spec/support/index.jpeg") { |f| f.read })
 				params['photo'] = file_contents
-				post :create, :picture => params , :format => :json
+				post :create, picture: params , format: :json
 			end
 
 			it 'creates a resource' do
@@ -54,8 +55,8 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 
 		context 'when it is not a valid request' do
 			before(:each) do
-				params = FactoryGirl.build(:picture, :without_title, :category_id => category.id).attributes
-				post :create, :picture => params , :format => :json
+				params = FactoryGirl.build(:picture, :without_title, category_id: category.id).attributes
+				post :create, picture: params , format: :json
 			end
 
 			it 'creates errors resource' do
@@ -72,12 +73,12 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 	describe 'PATCH/PUT /pictures/:id' do
 		context 'when it is a valid request' do
 			let(:attr) do 
-    		{ :title => 'new title' }
+    		{ title: 'new title' }
   		end
 
   		before(:each) do
-				@pic = FactoryGirl.create(:picture, :category_id => category.id)
-				patch :update, :id => @pic.id, :picture => attr, :format => :json
+				@pic = FactoryGirl.create(:picture, :category_id: category.id)
+				patch :update, id: @pic.id, picture: attr, format: :json
 				@pic.reload
 			end
 
@@ -99,12 +100,12 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 
 		context 'when it is not a valid request' do
 			let(:attr) do 
-    		{ :title => nil }
+    		{ title: nil }
   		end
 
   		before(:each) do
-				@pic = FactoryGirl.create(:picture, :category_id => category.id)
-				patch :update, :id => @pic.id, :picture => attr, :format => :json
+				@pic = FactoryGirl.create(:picture, category_id: category.id)
+				patch :update, id: @pic.id, picture: attr, format: :json
 				@pic.reload
 			end
 
@@ -122,8 +123,8 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 	describe 'DELETE /pictures/:id' do
 		context 'when it is a valid request' do
 			before(:each) do
-				@pic = FactoryGirl.create(:picture, :category_id => category.id)
-				delete :destroy, :id => @pic.id, :format => :json
+				@pic = FactoryGirl.create(:picture, category_id: category.id)
+				delete :destroy, id: @pic.id, format: :json
 			end
 
 			it 'responds with 204' do
@@ -135,8 +136,8 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 	describe 'GET /pictures/:id (SHOW)' do
 		context 'when it is a valid request' do
 			before(:each) do
-				@pic = FactoryGirl.create(:picture, :category_id => category.id)
-				get :show, :id => @pic.id, :format => :json
+				@pic = FactoryGirl.create(:picture, category_id: category.id)
+				get :show, id: @pic.id, format: :json
 			end
 
 			it 'creates a resource' do
@@ -163,9 +164,9 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
   		before(:each) do
   			@user = FactoryGirl.create(:user)
 				sign_in(@user)
-				@pic = FactoryGirl.create(:picture, :category_id => category.id)
+				@pic = FactoryGirl.create(:picture, category_id: category.id)
 				@likes = @pic.reputation_for(:likes)
-				post :like, :id => @pic.id, :format => :json
+				post :like, id: @pic.id, format: :json
 				@pic.reload
 			end
 
@@ -174,7 +175,7 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 			end
 
 			it 'decrements likes on second call' do
-				post :like, :id => @pic.id, :format => :json
+				post :like, id: @pic.id, format: :json
 				@pic.reload
 				expect(@likes).to eq(@pic.reputation_for(:likes))
 			end
@@ -197,6 +198,4 @@ RSpec.describe Api::V1::PicturesController, :type => :controller do
 			end
 		end
 	end
-
-
 end

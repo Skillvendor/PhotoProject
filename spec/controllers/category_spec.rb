@@ -1,11 +1,11 @@
 require "rails_helper"
 
 
-RSpec.describe Api::V1::CategoriesController, :type => :controller do
+RSpec.describe Api::V1::CategoriesController, type: :controller do
 
 	describe 'GET /categories' do
 		before(:each) do
-      get :index, :format => :json
+      get :index, format: :json
     end
 			
 		it 'creates a resource' do
@@ -20,8 +20,8 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 	describe 'POST /categories' do
 		context 'when it is a valid request' do
 			before(:each) do
-				params = FactoryGirl.build(:category, :name => 'TestCat').attributes 
-				post :create, :category => params , :format => :json
+				params = FactoryGirl.build(:category, name: 'TestCat').attributes 
+				post :create, category: params, format: :json
 			end
 
 			it 'creates a resource' do
@@ -39,7 +39,7 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 		context 'when it is not a valid request' do
 			before(:each) do
 				params = FactoryGirl.build(:category, :without_name).attributes 
-				post :create, :category => params , :format => :json
+				post :create, category: params , format: :json
 			end
 
 			it 'responds with 400' do
@@ -56,12 +56,12 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 	describe 'PATCH/PUT /categories/:id' do
 		context 'when it is a valid request' do
 			let(:attr) do 
-    		{ :name => 'new name' }
+    		{ name: 'new name' }
   		end
 
 			before(:each) do
 				@category = FactoryGirl.create(:category)
-				patch :update, :id => @category.id, :category => attr, :format => :json
+				patch :update, id: @category.id, category: attr, format: :json
 				@category.reload
 			end
 
@@ -83,12 +83,12 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 
 		context 'when it is not a valid request' do
 			let(:attr) do 
-    		{ :name => nil }
+    		{ name: nil }
   		end
 
 			before(:each) do
 				@category = FactoryGirl.create(:category)
-				patch :update, :id => @category.id, :category => attr, :format => :json
+				patch :update, id: @category.id, category: attr, format: :json
 				@category.reload
 			end
 
@@ -107,7 +107,7 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 		context 'when it is a valid request' do
 			before(:each) do
 				@category = FactoryGirl.create(:category)
-				delete :destroy, :id => @category.id, :format => :json
+				delete :destroy, id: @category.id, format: :json
 			end
 
 			it 'responds with 204' do
@@ -119,8 +119,8 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 	describe 'GET /categories/categories_with_pics' do
 		before(:each) do
 			@category = FactoryGirl.create(:category)
-			@picture = FactoryGirl.create(:picture, :category_id => @category.id)
-			get :categories_with_pics, :format => :json
+			@picture = FactoryGirl.create(:picture, category_id: @category.id)
+			get :categories_with_pics, format: :json
 		end
 
 		it 'creates a resource' do
@@ -145,7 +145,7 @@ RSpec.describe Api::V1::CategoriesController, :type => :controller do
 		context 'when it is a valid request' do
 			before(:each) do
 				@category = FactoryGirl.create(:category)
-				get :show, :id => @category.id , :format => :json
+				get :show, id: @category.id , format: :json
 			end
 
 			it 'responds with resource' do

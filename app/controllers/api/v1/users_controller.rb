@@ -3,19 +3,20 @@ module Api
     class UsersController < Api::V1::BaseController
       include Devise::Controllers::Helpers
 
-      before_filter :authenticate_user!, :except => [:create, :show]
+      before_action :authenticate_user!, except: [:create, :show]
+      before_action :admin?, only: [:make_admin]
 
       def show
-        render json: serialize_model(current_user), :status => :ok
+        render json: serialize_model(current_user), status: :ok
       end
 
       def create
         @user = User.create(user_params)
         if @user.valid?
           sign_in(@user)
-          render json: serialize_model(@user), :status => :created
+          render json: serialize_model(@user), status: :created
         else
-          render json: { :errors => @user.errors }, :status => 400
+          render json: { errors: @user.errors }, status: :bad_request
         end
       end
 
@@ -25,6 +26,13 @@ module Api
 
       def destroy
         respond_with :api, User.find(current_user.id).destroy
+      end
+
+      def make_admin
+        @user = User.find_by_email!(params[:email])
+        @user.admin = true
+        @user.save
+        render json: serialize_model(@user), status: :accepted
       end
 
       private

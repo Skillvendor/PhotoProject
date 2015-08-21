@@ -1,5 +1,6 @@
 class Picture < ActiveRecord::Base
 	belongs_to :category, counter_cache: true
+	belongs_to :user
 	has_many :comments, dependent: :destroy
 	mount_base64_uploader :photo, PhotoUploader
 
@@ -9,6 +10,7 @@ class Picture < ActiveRecord::Base
 	validates :photo, presence: true
 	validates :title, presence: true
 	validates :category_id, presence: true
+	validates :user_id, presence: true
 
 	scope :order_desc, -> { order(id: :desc)}
 

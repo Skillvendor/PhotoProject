@@ -2,6 +2,7 @@ module Api
   module V1
     class CategoriesController < Api::V1::BaseController
     	before_action :set_category, only: [:destroy, :update, :show]
+      before_action :admin?, only: [:create, :destroy, :update]
 
       before_filter only: [:create, :update] do
         unless params.has_key?('category')
@@ -13,7 +14,7 @@ module Api
 
     	def index
     		@categories = Category.all
-        render json: serialize_models(@categories), :status => :ok
+        render json: serialize_models(@categories), status: :ok
     	end
 
       def new
@@ -26,25 +27,25 @@ module Api
     	def create 
     		@category = Category.new(category_params)
         if @category.save
-          render json: serialize_model(@category), :status => :created
+          render json: serialize_model(@category), status: :created
         else
-          render json: { :errors => @category.errors }, :status => :bad_request
+          render json: { errors: @category.errors }, status: :bad_request
         end
       end
 
       def destroy
         if @category.destroy
-          head :no_content, :status => :no_content
+          head :no_content, status: :no_content
         else
-          render json: { errors: @category.errors }, :status => :bad_request
+          render json: { errors: @category.errors }, status: :bad_request
         end
       end
 
       def update
         if @category.update_attributes(category_params)
-          render json: serialize_model(@category), :status => :accepted
+          render json: serialize_model(@category), status: :accepted
         else
-          render json: { :errors => @category.errors }, :status => :bad_request
+          render json: { errors: @category.errors }, status: :bad_request
         end
       end
 

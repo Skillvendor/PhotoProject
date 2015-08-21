@@ -3,12 +3,13 @@ module Api
     class PicturesController < Api::V1::BaseController
     	before_action :set_pic, only: [:show, :destroy, :update, :like, :dislike]
     	before_action :get_comments, only: [:show]
+      before_action :admin?, only: [:create, :update, :destoy]
       
       respond_to :json
 
     	def index
     		@pictures = Picture.order_desc
-        render json: serialize_models(@pictures), :status => :ok
+        render json: serialize_models(@pictures), status: :ok
     	end
 
     	def new
@@ -17,9 +18,9 @@ module Api
     	def create
     		@pic = Picture.new(picture_params)
         if @pic.save
-          render json: serialize_model(@pic), :status => :created
+          render json: serialize_model(@pic), status: :created
         else
-          render json: { :errors => @pic.errors }, :status => :bad_request
+          render json: { errors: @pic.errors }, status: :bad_request
         end
       end
 
@@ -29,17 +30,17 @@ module Api
 
       def update
         if @pic.update_attributes(picture_params)
-          render json: serialize_model(@pic), :status => :accepted
+          render json: serialize_model(@pic), status: :accepted
         else
-          render json: { :errors => @pic.errors }, :status => :bad_request
+          render json: { errors: @pic.errors }, status: :bad_request
         end
       end
 
       def destroy
       	if @pic.destroy
-          head :no_content, :status => :no_content
+          head :no_content, status: :no_content
         else
-          render json: { :errors => @pic.errors }, :status => :bad_request
+          render json: { errors: @pic.errors }, status: :bad_request
         end
       end
 

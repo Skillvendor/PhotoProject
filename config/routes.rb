@@ -9,14 +9,15 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
 
       devise_scope :user do
-        match '/sessions' => 'sessions#create', :via => :post
-        match '/sessions' => 'sessions#destroy', :via => :delete
+        post '/sessions' => 'sessions#create'
+        delete '/sessions' => 'sessions#destroy'
       end
 
       resources :users, only: [:create]
-      match '/users' => 'users#show', :via => :get
-      match '/users' => 'users#update', :via => :put
-      match '/users' => 'users#destroy', :via => :delete
+      get '/users' => 'users#show'
+      put 'users/:email' => 'users#make_admin'
+      put '/users' => 'users#update'
+      delete '/users' => 'users#destroy'
 
       get 'categories/categories_with_pics' => 'categories#categories_with_pics', as: 'category_with_pics'
       resources :categories

@@ -9,7 +9,6 @@ class PictureSerializer < ActiveModel::Serializer
   attribute :photo
   attribute :created_at
 
-
   has_many :comments do
   	Comment.where(picture_id: object)
   end

@@ -11,6 +11,7 @@ FactoryGirl.define do
 		f.title "PozaDinFactory"
 		f.description "DescriereDinFactory"
 		f.association :category_id, factory: :category
+		f.association :user_id, factory: :user
 		f.photo { File.new("#{Rails.root}/spec/support/index.jpeg") }
 
 		trait :without_photo do

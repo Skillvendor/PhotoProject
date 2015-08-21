@@ -15,15 +15,15 @@ module Api
     	def create
     		@comment = Comment.new(comment_params.merge(:user_id => current_user.id))
         if @comment.save
-          render json: serialize_model(@comment), :status => :created
+          render json: serialize_model(@comment), status: :created
         else
-          render json: { :errors => @comment.errors }, :status => :bad_request
+          render json: { errors: @comment.errors }, status: :bad_request
         end
     	end
 
     	def destroy
       	if @comment.destroy
-          head :no_content, :status => :no_content
+          head :no_content, status: :no_content
         else
           render json: serialize_model(@comment.errors)
         end
@@ -31,9 +31,9 @@ module Api
 
       def update
         if @comment.update_attributes(comment_params)
-          render json: serialize_model(@comment), :status => :accepted
+          render json: serialize_model(@comment), status: :accepted
         else
-          render json: { :errors => @comment.errors }, :status => :bad_request
+          render json: { errors: @comment.errors }, status: :bad_request
         end
       end
 
@@ -48,8 +48,8 @@ module Api
       end
 
       def check_login
-        unless current_user
-          render nothing: true, status: :unauthorized
+        unless user_signed_in?
+          head :no_content, status: :unauthorized
         end
       end
     end

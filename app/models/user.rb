@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :rememberable, :validatable
 
   has_many :comments, dependent: :destroy
-  has_many :evaluations, class_name: "RSEvaluation", as: :source
+  has_many :pictures, dependent: :destroy
 
   def voted?(name, pic)
     pic.evaluators_for(name).include?(self)

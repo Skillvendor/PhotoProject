@@ -1,14 +1,14 @@
 require "rails_helper"
 
-RSpec.describe Api::V1::CommentsController, :type => :controller do
+RSpec.describe Api::V1::CommentsController, type: :controller do
 	include_context 'comments'
 
 	describe 'POST /comments' do
 		context 'when it is a valid request' do
 			before(:each) do
 				setup_requirements
-				params = FactoryGirl.build(:comment, :text => 'TestCom', :picture_id => @picture.id).attributes 
-				post :create, :comment => params , :format => :json
+				params = FactoryGirl.build(:comment, text: 'TestCom', picture_id: @picture.id).attributes 
+				post :create, comment: params, format: :json
 			end
 
 			it 'creates a resource' do
@@ -26,8 +26,8 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 		context 'when it is not a valid request' do
 			before(:each) do
 				setup_requirements
-				params = FactoryGirl.build(:comment, :without_text, :picture_id => @picture.id).attributes
-				post :create, :comment => params , :format => :json
+				params = FactoryGirl.build(:comment, :without_text, picture_id: @picture.id).attributes
+				post :create, comment: params, format: :json
 			end
 
 			it 'responds with 400' do
@@ -44,13 +44,13 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 	describe 'PATCH /api/comments/:id' do
 		context 'when it is a valid request' do
 			let(:attr) do 
-    		{ :text => 'update' }
+    		{ text: 'update' }
   		end
 
 			before(:each) do
 				setup_requirements
-				@comment = FactoryGirl.create(:comment, :picture_id => @picture.id, :user_id => @user.id)
-				patch :update, :id => @comment.id, :comment => attr , :format => :json
+				@comment = FactoryGirl.create(:comment, picture_id: @picture.id, user_id: @user.id)
+				patch :update, id: @comment.id, comment: attr , format: :json
 			end
 
 			it 'creates a resource' do
@@ -70,8 +70,8 @@ RSpec.describe Api::V1::CommentsController, :type => :controller do
 		context 'when it is a valid request' do
 			before(:each) do
 				setup_requirements
-    		@comment = FactoryGirl.create(:comment, :picture_id => @picture.id, :user_id => @user.id)
-				delete :destroy, :id => @comment.id, :format => :json
+    		@comment = FactoryGirl.create(:comment, picture_id: @picture.id, user_id: @user.id)
+				delete :destroy, id: @comment.id, format: :json
 			end
 
 			it 'responds with 204' do

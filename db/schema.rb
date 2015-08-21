@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819084640) do
+ActiveRecord::Schema.define(version: 20150821095220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 20150819084640) do
     t.datetime "updated_at"
     t.string   "photo"
     t.string   "title",       null: false
+    t.integer  "user_id"
   end
 
   add_index "pictures", ["category_id"], name: "index_pictures_on_category_id", using: :btree
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id", using: :btree
 
   create_table "rs_evaluations", force: :cascade do |t|
     t.string   "reputation_name"
@@ -92,11 +94,12 @@ ActiveRecord::Schema.define(version: 20150819084640) do
   add_index "rs_reputations", ["target_id", "target_type"], name: "index_rs_reputations_on_target_id_and_target_type", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",               default: "", null: false
-    t.string   "encrypted_password",  default: "", null: false
+    t.string   "email",               default: "",    null: false
+    t.string   "encrypted_password",  default: "",    null: false
     t.datetime "remember_created_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "admin",               default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -104,4 +107,5 @@ ActiveRecord::Schema.define(version: 20150819084640) do
   add_foreign_key "comments", "pictures"
   add_foreign_key "comments", "users"
   add_foreign_key "pictures", "categories"
+  add_foreign_key "pictures", "users"
 end
