@@ -18,7 +18,11 @@ class Api::V1::BaseController < ApplicationController
     end
   end
 
-  def admin?
-    render json: { errors: { admin: "not an admin or not signed in" } }, status: :bad_request unless user_signed_in? && current_user.admin 
+  def signed_in_and_admin?
+    unless user_signed_in?
+      render json: { errors: { user: "not signed in" } }, status: :unauthorized
+    else  
+      render json: { errors: { admin: "not an admin" } }, status: :unauthorized unless current_user.admin
+    end 
   end
 end

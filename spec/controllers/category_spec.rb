@@ -1,7 +1,9 @@
 require "rails_helper"
-
+include Warden::Test::Helpers
+Warden.test_mode!
 
 RSpec.describe Api::V1::CategoriesController, type: :controller do
+	include_context 'categories'
 
 	describe 'GET /categories' do
 		before(:each) do
@@ -20,6 +22,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
 	describe 'POST /categories' do
 		context 'when it is a valid request' do
 			before(:each) do
+				log_in_admin
 				params = FactoryGirl.build(:category, name: 'TestCat').attributes 
 				post :create, category: params, format: :json
 			end
@@ -38,6 +41,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
 
 		context 'when it is not a valid request' do
 			before(:each) do
+				log_in_admin
 				params = FactoryGirl.build(:category, :without_name).attributes 
 				post :create, category: params , format: :json
 			end
@@ -51,6 +55,25 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
 				expect(body).to include('errors')
 			end
 		end
+
+		context 'when not logged in' do
+			before(:each) do
+				params = FactoryGirl.build(:category, name: 'TestCat').attributes 
+				post :create, category: params, format: :json
+			end
+
+			it_behaves_like 'not logged in'
+		end
+
+		context 'when not an admin' do
+			before(:each) do
+				log_in_user
+				params = FactoryGirl.build(:category, name: 'TestCat').attributes 
+				post :create, category: params, format: :json
+			end
+
+			it_behaves_like 'not an admin'
+		end
 	end
 
 	describe 'PATCH/PUT /categories/:id' do
@@ -60,6 +83,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
   		end
 
 			before(:each) do
+				log_in_admin
 				@category = FactoryGirl.create(:category)
 				patch :update, id: @category.id, category: attr, format: :json
 				@category.reload
@@ -87,6 +111,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
   		end
 
 			before(:each) do
+				log_in_admin
 				@category = FactoryGirl.create(:category)
 				patch :update, id: @category.id, category: attr, format: :json
 				@category.reload
@@ -101,11 +126,41 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
 				expect(body).to include('errors')
 			end
 		end
+
+		context 'when not logged in' do
+			let(:attr) do 
+    		{ name: 'new name' }
+  		end
+
+			before(:each) do
+				@category = FactoryGirl.create(:category)
+				patch :update, id: @category.id, category: attr, format: :json
+				@category.reload
+			end
+
+			it_behaves_like 'not logged in'
+		end
+
+		context 'when not an admin' do
+			let(:attr) do 
+    		{ name: 'new name' }
+  		end
+
+			before(:each) do
+				log_in_user
+				@category = FactoryGirl.create(:category)
+				patch :update, id: @category.id, category: attr, format: :json
+				@category.reload
+			end
+
+			it_behaves_like 'not an admin'
+		end
 	end
 
 	describe 'DESTROY /categories/:id' do
 		context 'when it is a valid request' do
 			before(:each) do
+				log_in_admin
 				@category = FactoryGirl.create(:category)
 				delete :destroy, id: @category.id, format: :json
 			end
@@ -114,12 +169,32 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
 				expect(response).to have_http_status(204)
 			end
 		end
+
+		context 'when not logged in' do
+			before(:each) do
+				@category = FactoryGirl.create(:category)
+				delete :destroy, id: @category.id, format: :json
+			end
+
+			it_behaves_like 'not logged in'
+		end
+
+		context 'when not an admin' do
+			before(:each) do
+				log_in_user
+				@category = FactoryGirl.create(:category)
+				delete :destroy, id: @category.id, format: :json
+			end
+
+			it_behaves_like 'not an admin'
+		end
 	end
 
 	describe 'GET /categories/categories_with_pics' do
 		before(:each) do
 			@category = FactoryGirl.create(:category)
-			@picture = FactoryGirl.create(:picture, category_id: @category.id)
+			@user = FactoryGirl.create(:user)
+			@picture = FactoryGirl.create(:picture, category_id: @category.id, user_id: @user.id)
 			get :categories_with_pics, format: :json
 		end
 

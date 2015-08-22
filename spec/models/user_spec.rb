@@ -23,7 +23,7 @@ describe User do
 		end
 
 		context 'when its email does not have a valid form' do
-			let(:user) { FactoryGirl.build(:user, :email => 'test') }
+			let(:user) { FactoryGirl.build(:user, email: 'test') }
 
 			it 'is not valid' do
 				user.save
@@ -32,8 +32,8 @@ describe User do
 		end
 
 		context 'when email is duplicate' do
-			let(:user1) { FactoryGirl.build(:user, :email => 'test@yahoo.com') }
-			let(:user2) { FactoryGirl.build(:user, :email => 'Test@yahoo.com') }
+			let(:user1) { FactoryGirl.build(:user, email: 'test@yahoo.com') }
+			let(:user2) { FactoryGirl.build(:user, email: 'Test@yahoo.com') }
 
 			it 'is not valid' do
 				user1.save
@@ -43,7 +43,7 @@ describe User do
 		end
 
 		context 'when passwords do not match' do
-			let(:user) { FactoryGirl.build(:user, :password => 'pass1', :password_confirmation => 'pass2') }
+			let(:user) { FactoryGirl.build(:user, password: 'pass1', password_confirmation: 'pass2') }
 
 			it 'it is not valid' do
 				user.save

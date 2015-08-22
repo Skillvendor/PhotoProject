@@ -2,13 +2,7 @@ module Api
   module V1
     class CategoriesController < Api::V1::BaseController
     	before_action :set_category, only: [:destroy, :update, :show]
-      before_action :admin?, only: [:create, :destroy, :update]
-
-      before_filter only: [:create, :update] do
-        unless params.has_key?('category')
-          render nothing: true, status: :bad_request
-        end
-      end
+      before_action :signed_in_and_admin?, only: [:create, :destroy, :update]
 
       respond_to :json
 

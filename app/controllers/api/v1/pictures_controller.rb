@@ -3,7 +3,8 @@ module Api
     class PicturesController < Api::V1::BaseController
     	before_action :set_pic, only: [:show, :destroy, :update, :like, :dislike]
     	before_action :get_comments, only: [:show]
-      before_action :admin?, only: [:create, :update, :destoy]
+      before_action :signed_in_and_admin?, only: [:create, :update, :destroy]
+      before_action :signed_in?, only: [:like, :dislike]
       
       respond_to :json
 
@@ -60,12 +61,16 @@ module Api
     	end
 
     	def picture_params
-    		params.require(:picture).permit(:title, :photo, :description, :category_id)
+    		params.require(:picture).permit(:title, :photo, :description, :category_id, :user_id)
     	end
 
     	def get_comments
     		@comments = @pic.comments
     	end
+
+      def signed_in?   
+        render json: { errors: { user: "not signed in" } }, status: :unauthorized  unless user_signed_in?
+      end
     end
   end
 end

@@ -1,19 +1,13 @@
 module Api
   module V1
     class CommentsController < Api::V1::BaseController
-      before_action :check_login
-      before_action :get_comment, only: [:destroy, :update] 
-
-      before_filter only: [:create] do
-        unless params.has_key?('comment') 
-          render nothing: true, status: :bad_request
-        end
-      end
+      before_action :signed_in?
+      before_action :get_comment, only: [:destroy, :update]
 
       respond_to :json
 
     	def create
-    		@comment = Comment.new(comment_params.merge(:user_id => current_user.id))
+    		@comment = Comment.new(comment_params.merge(user_id: current_user.id))
         if @comment.save
           render json: serialize_model(@comment), status: :created
         else
@@ -45,12 +39,15 @@ module Api
 
       def get_comment
         @comment = Comment.find_by_id(params[:id])
+        check_owner
       end
 
-      def check_login
-        unless user_signed_in?
-          head :no_content, status: :unauthorized
-        end
+      def signed_in?
+         render json: { errors: { user: "not signed in" } }, status: :unauthorized  unless user_signed_in?
+      end
+
+      def check_owner
+        render json: { errors: { user: "not the owner" } }, status: :unauthorized  unless current_user.id == @comment.user_id
       end
     end
   end

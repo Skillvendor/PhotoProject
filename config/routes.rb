@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         delete '/sessions' => 'sessions#destroy'
       end
 
-      resources :users, only: [:create]
+      resources :users, except: [:index]
       get '/users' => 'users#show'
       put 'users/:email' => 'users#make_admin'
       put '/users' => 'users#update'

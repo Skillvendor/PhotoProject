@@ -3,12 +3,13 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 RSpec.describe Api::V1::UsersController, type: :controller do
+	include_context 'users'
 
 	describe 'GET /api/users' do
 		context 'when the user is logged in' do
 			before(:each) do
 				user = FactoryGirl.create(:user, email: 'test_email@yahoo.com')
-				login_as(user, scope: :user)
+				sign_in(user)
 	      get :show, format: :json
 	    end
 				
@@ -167,9 +168,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
 				@user2 = FactoryGirl.create(:user)
-				@user.admin = true
-				@user.save
-				sign_in(@user)
+				log_in_admin(@user)
 				put :make_admin, email: @user2.email, format: :json
 				@user2.reload
 			end
@@ -192,8 +191,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 				@user2.reload
 			end
 
-			it 'responds with 400' do
-				expect(response).to have_http_status(400)
+			it 'responds with 401' do
+				expect(response).to have_http_status(401)
 			end
 
 			it 'creates a resource with the error' do
@@ -208,9 +207,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
 				@user2 = FactoryGirl.create(:user)
-				@user.admin = true
-				@user.save
-				sign_in(@user)
+				log_in_admin(@user)
 				put :make_admin, email: @user2.email + "test", format: :json
 				@user2.reload
 			end

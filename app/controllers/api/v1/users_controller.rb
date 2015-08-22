@@ -4,7 +4,7 @@ module Api
       include Devise::Controllers::Helpers
 
       before_action :authenticate_user!, except: [:create, :show]
-      before_action :admin?, only: [:make_admin]
+      before_action :signed_in_and_admin?, only: [:make_admin]
 
       def show
         render json: serialize_model(current_user), status: :ok

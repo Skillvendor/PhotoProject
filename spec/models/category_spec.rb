@@ -23,8 +23,8 @@ describe Category do
 		end
 
 		context 'when name is a duplicate' do
-			let(:category1) { FactoryGirl.build(:category, :name => 'Test') }
-			let(:category2) { FactoryGirl.build(:category, :name => 'test') } 
+			let(:category1) { FactoryGirl.build(:category, name: 'Test') }
+			let(:category2) { FactoryGirl.build(:category, name: 'test') } 
 
 			it 'is not valid' do
 				category1.save
