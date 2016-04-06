@@ -6,17 +6,17 @@ module Api
 
       respond_to :json
 
-    	def create
-    		@comment = Comment.new(comment_params.merge(user_id: current_user.id))
+      def create
+        @comment = Comment.new(comment_params.merge(user_id: current_user.id))
         if @comment.save
           render json: serialize_model(@comment), status: :created
         else
           render json: { errors: @comment.errors }, status: :bad_request
         end
-    	end
+      end
 
-    	def destroy
-      	if @comment.destroy
+      def destroy
+        if @comment.destroy
           head :no_content, status: :no_content
         else
           render json: serialize_model(@comment.errors)
@@ -32,10 +32,10 @@ module Api
       end
 
     private
-    	
-    	def comment_params
-    		params.require(:comment).permit(:text, :picture_id)
-    	end
+      
+      def comment_params
+        params.require(:comment).permit(:text, :picture_id)
+      end
 
       def get_comment
         @comment = Comment.find_by_id(params[:id])

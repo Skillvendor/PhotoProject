@@ -1,15 +1,15 @@
 module Api
   module V1
     class CategoriesController < Api::V1::BaseController
-    	before_action :set_category, only: [:destroy, :update, :show]
+      before_action :set_category, only: [:destroy, :update, :show]
       before_action :signed_in_and_admin?, only: [:create, :destroy, :update]
 
       respond_to :json
 
-    	def index
-    		@categories = Category.all
+      def index
+        @categories = Category.all
         render json: serialize_models(@categories), status: :ok
-    	end
+      end
 
       def new
       end
@@ -18,8 +18,8 @@ module Api
         render json: serialize_model(@category, include: ['pictures'])
       end
 
-    	def create 
-    		@category = Category.new(category_params)
+      def create 
+        @category = Category.new(category_params)
         if @category.save
           render json: serialize_model(@category), status: :created
         else
@@ -50,13 +50,13 @@ module Api
 
     private
 
-    	def category_params
-    		params.require(:category).permit(:name)
-    	end
+      def category_params
+        params.require(:category).permit(:name)
+      end
 
-    	def set_category
-    		@category = Category.find_by_id(params[:id])
-    	end
+      def set_category
+        @category = Category.find_by_id(params[:id])
+      end
     end
   end
 end
